@@ -1,4 +1,4 @@
 cmake_minimum_required(VERSION 3.18)
-project(node)
+project(nodes)
 add_subdirectory(pybind11)
-pybind11_add_module(node node.cpp)
+pybind11_add_module(nodes node.cpp)
