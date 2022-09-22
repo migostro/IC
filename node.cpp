@@ -70,15 +70,20 @@ lli Node::adj_size(){
 
 
 /*************************************** NODES ****************************************/
+/* Recebe dois vetores out e in, tal que existe um arco que sai de out[i] e vai para in[i], e um intero n (o tamanho dos vetores)
+   Inicializa o grafo com esses parametros
+*/
 Nodes::Nodes(std::vector<lli>& out, std::vector<lli>& in, lli n){
     std::vector<Node> novo(n);
     node_vector = novo;
-    for (lli i = 0; i < n-1; i++){
+    for (lli i = 0; i < n; i++){
         node_vector[out[i]].add_adj(in[i]);
         node_vector[in[i]].add_father(out[i]);
     }
 }
 
+/* 
+*/
 void Nodes::add_flow(lli v, lli amount){
     node_vector[v].add_flow(amount);
 }
@@ -103,12 +108,14 @@ lli Nodes::num_fathers(lli v){
 }
 
 lli Nodes::weight(lli i, lli j){
+    
     return node_vector[i].get_weight(j);
 }
 
 lli Nodes::get_flow_amount(lli i){
     return node_vector[i].get_flow_amount();
 }
+
 
 void Nodes::calcula_fluxo(){
     lli n = node_vector.size();
@@ -121,7 +128,7 @@ void Nodes::calcula_fluxo(){
     {
         if (node_vector[i].num_fathers() == 0)
         {
-            node_vector[i].set_weight(0, 1);
+            node_vector[i].set_weight(node_vector[i].adj_size()-1, 1);
             queue.push(i);
         }
     }
