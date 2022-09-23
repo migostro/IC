@@ -48,6 +48,10 @@ std::pair<lli, lli> Node::get_adj(lli i){
     return adj[i];
 }
 
+std::vector<lli> Node::get_fathers(){
+    return fathers;
+}
+
 lli Node::fathers_size(){
     return fathers.size();
 }
@@ -101,6 +105,10 @@ void Nodes::set_weight(lli v, lli i, lli weight){
 
 std::vector<std::pair<lli, lli>> Nodes::adj(lli v){
     return node_vector[v].get_adj();
+}
+
+std::vector<lli> Nodes::fathers(lli v){
+    return node_vector[v].get_fathers();
 }
 
 lli Nodes::num_fathers(lli v){

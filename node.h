@@ -24,7 +24,7 @@ class Node{
         void set_weight(lli i, lli weight);
         std::vector<std::pair<lli, lli>> get_adj();
         std::pair<lli, lli> get_adj(lli i);
-        std::vector<lli> fathers();
+        std::vector<lli> get_fathers();
         lli fathers_size();
         lli get_weight(lli i);
         lli get_flow_amount();
