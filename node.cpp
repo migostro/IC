@@ -172,7 +172,8 @@ PYBIND11_MODULE(nodes, handle) {
         .def("add_adj", &Nodes::add_adj)
         .def("set_weight", &Nodes::set_weight)
         .def("adj", &Nodes::adj)
-        .def("num_fathers", &Nodes::num_fathers)
+        .def("adj", &Nodes::adj)
+        .def("fathers", &Nodes::fathers)
         .def("weight", &Nodes::weight)
         .def("get_flow_amount", &Nodes::get_flow_amount)
         .def("calcula_fluxo", &Nodes::calcula_fluxo);
