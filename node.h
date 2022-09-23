@@ -24,6 +24,7 @@ class Node{
         void set_weight(lli i, lli weight);
         std::vector<std::pair<lli, lli>> get_adj();
         std::pair<lli, lli> get_adj(lli i);
+        std::vector<lli> fathers();
         lli fathers_size();
         lli get_weight(lli i);
         lli get_flow_amount();
@@ -41,6 +42,7 @@ class Nodes{
         void add_adj(lli v, lli u);
         void set_weight(lli v, lli i, lli weight);
         std::vector<std::pair<lli, lli>> adj(lli v);
+        std::vector<lli> fathers(lli v);
         lli num_fathers(lli v);
         lli weight(lli i, lli j);
         lli get_flow_amount(lli i);
