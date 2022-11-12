@@ -15,7 +15,7 @@ namespace py = pybind11;
 using namespace std;
 
 
-vector<lli> Nodes::random_tree(lli n, lli seed){
+vector<lli> random_tree(lli n, lli seed){
     srand(seed);
 
     std::vector<lli> tree(n);
