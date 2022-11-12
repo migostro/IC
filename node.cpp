@@ -213,5 +213,4 @@ PYBIND11_MODULE(nodes, handle) {
         .def("weight", &Nodes::weight)
         .def("get_flow_amount", &Nodes::get_flow_amount)
         .def("calcula_fluxo", &Nodes::calcula_fluxo);
-        .def("random_tree", &Nodes::random_tree);
 }
