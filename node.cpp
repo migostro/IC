@@ -80,9 +80,38 @@ lli Node::adj_size(){
 
 /* Private functions */
 
+std::vector<lli> Nodes::random_tree(lli n){
+    std::vector<lli> tree(n);
+
+    // defines de atractor
+    tree[0] = 0;
+
+    for (lli i = 1; i < n; i++)
+    {
+        // random number in [0,i[
+        lli random_num = rand()%i;
+        tree[i] = random_num;
+    }
+    
+    return tree;
+}
 
 /* Public functions */
 
+/* Creates a random tree with n vertices */
+Nodes::Nodes(lli n, lli seed){
+    node_vector.resize(n);
+    srand(seed);
+    std::vector<lli> tree = random_tree(n);
+    
+    for (lli i = 0; i < n; i++)
+    {
+        node_vector[i].add_adj(tree[i]);
+        node_vector[tree[i]].add_father(i);
+    }
+}
+
+/* Create a pre-defined graph */
 Nodes::Nodes(std::vector<lli>& out, std::vector<lli>& in, lli n){
     std::vector<Node> novo(n);
     node_vector = novo;
@@ -170,25 +199,10 @@ void Nodes::calcula_fluxo(){
     }
 }
 
-vector<lli> random_tree(lli n){
-    vector<lli> tree(n);
-
-    // defines de atractor
-    tree[0] = 0;
-
-    for (lli i = 1; i < n; i++)
-    {
-        // random number in [0,i[
-        random_num = rand()%i;
-        tree[i] = random_num;
-    }
-    
-    return tree;
-}
-
 // define as funções que podem ser usadas no python
 PYBIND11_MODULE(nodes, handle) {
     py::class_<Nodes>(handle, "Nodes")
+        .def(py::init<lli, lli>())
         .def(py::init<std::vector<lli>&, std::vector<lli>&, lli>())
         .def("add_flow", &Nodes::add_flow)
         .def("add_adj", &Nodes::add_adj)

@@ -37,7 +37,9 @@ class Node{
 class Nodes{
     private:
         std::vector<Node> node_vector;
+        std::vector<lli> random_tree(lli n);
     public:
+        Nodes(lli n, lli seed);
         Nodes(std::vector<lli>& out, std::vector<lli>& in, lli n);
         void add_flow(lli v, lli amount);
         void add_adj(lli v, lli u);
@@ -48,7 +50,7 @@ class Nodes{
         lli weight(lli i, lli j);
         lli get_flow_amount(lli i);
         void calcula_fluxo();
-        vector<lli> random_tree(lli n);
+
 };
 
 
