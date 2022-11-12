@@ -77,6 +77,12 @@ lli Node::adj_size(){
 /* Recebe dois vetores out e in, tal que existe um arco que sai de out[i] e vai para in[i], e um intero n (o tamanho dos vetores)
    Inicializa o grafo com esses parametros
 */
+
+/* Private functions */
+
+
+/* Public functions */
+
 Nodes::Nodes(std::vector<lli>& out, std::vector<lli>& in, lli n){
     std::vector<Node> novo(n);
     node_vector = novo;
@@ -164,6 +170,22 @@ void Nodes::calcula_fluxo(){
     }
 }
 
+vector<lli> random_tree(lli n){
+    vector<lli> tree(n);
+
+    // defines de atractor
+    tree[0] = 0;
+
+    for (lli i = 1; i < n; i++)
+    {
+        // random number in [0,i[
+        random_num = rand()%i;
+        tree[i] = random_num;
+    }
+    
+    return tree;
+}
+
 // define as funções que podem ser usadas no python
 PYBIND11_MODULE(nodes, handle) {
     py::class_<Nodes>(handle, "Nodes")
@@ -177,4 +199,5 @@ PYBIND11_MODULE(nodes, handle) {
         .def("weight", &Nodes::weight)
         .def("get_flow_amount", &Nodes::get_flow_amount)
         .def("calcula_fluxo", &Nodes::calcula_fluxo);
+        .def("random_tree", &Nodes::random_tree);
 }

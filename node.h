@@ -5,6 +5,7 @@
 #include <bits/stdc++.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <cstdlib>
 
 
 #define lli long long int
@@ -47,6 +48,7 @@ class Nodes{
         lli weight(lli i, lli j);
         lli get_flow_amount(lli i);
         void calcula_fluxo();
+        vector<lli> random_tree(lli n);
 };
 
 
