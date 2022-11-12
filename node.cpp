@@ -204,7 +204,6 @@ void Nodes::calcula_fluxo(){
 PYBIND11_MODULE(nodes, handle) {
     handle.def("random_tree", &random_tree);
     py::class_<Nodes>(handle, "Nodes")
-        .def(py::init<lli, lli>())
         .def(py::init<std::vector<lli>&, std::vector<lli>&, lli>())
         .def("add_flow", &Nodes::add_flow)
         .def("add_adj", &Nodes::add_adj)
