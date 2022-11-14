@@ -10,7 +10,7 @@
 
 #include "node.h"
 
-// namespace py = pybind11;
+namespace py = pybind11;
 
 using namespace std;
 
@@ -254,18 +254,18 @@ std::vector<std::vector<int>> Nodes::infer_regulation_matrix(){
 }
 
 // define as funções que podem ser usadas no python
-// PYBIND11_MODULE(nodes, handle) {
-//     py::class_<Nodes>(handle, "Nodes")
-//         .def(py::init<lli, lli>())
-//         .def(py::init<std::vector<lli>&, std::vector<lli>&, lli>())
-//         .def("add_flow", &Nodes::add_flow)
-//         .def("add_adj", &Nodes::add_adj)
-//         .def("set_weight", &Nodes::set_weight)
-//         .def("adj", &Nodes::adj)
-//         .def("adj", &Nodes::adj)
-//         .def("fathers", &Nodes::fathers)
-//         .def("weight", &Nodes::weight)
-//         .def("get_flow_amount", &Nodes::get_flow_amount)
-//         .def("calcula_fluxo", &Nodes::calcula_fluxo);
-//         .def("infer_regulation_matrix", &Nodes::infer_regulation_matrix);
-// }
+PYBIND11_MODULE(nodes, handle) {
+    py::class_<Nodes>(handle, "Nodes")
+        .def(py::init<lli, lli>())
+        .def(py::init<std::vector<lli>&, std::vector<lli>&, lli>())
+        .def("add_flow", &Nodes::add_flow)
+        .def("add_adj", &Nodes::add_adj)
+        .def("set_weight", &Nodes::set_weight)
+        .def("adj", &Nodes::adj)
+        .def("adj", &Nodes::adj)
+        .def("fathers", &Nodes::fathers)
+        .def("weight", &Nodes::weight)
+        .def("get_flow_amount", &Nodes::get_flow_amount)
+        .def("calcula_fluxo", &Nodes::calcula_fluxo);
+        .def("infer_regulation_matrix", &Nodes::infer_regulation_matrix);
+}
