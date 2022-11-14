@@ -266,6 +266,8 @@ PYBIND11_MODULE(nodes, handle) {
         .def("fathers", &Nodes::fathers)
         .def("weight", &Nodes::weight)
         .def("get_flow_amount", &Nodes::get_flow_amount)
-        .def("calcula_fluxo", &Nodes::calcula_fluxo);
-        .def("infer_regulation_matrix", &Nodes::infer_regulation_matrix);
+        .def("calcula_fluxo", &Nodes::calcula_fluxo)
+        .def("infer_regulation_matrix", &Nodes::infer_regulation_matrix)
+        .def("vector_to_integer", &Nodes::vector_to_integer)
+        .def("integer_to_vector", &Nodes::integer_to_vector);
 }
