@@ -10,7 +10,7 @@
 
 #include "node.h"
 
-namespace py = pybind11;
+// namespace py = pybind11;
 
 using namespace std;
 
@@ -96,10 +96,46 @@ std::vector<lli> Nodes::random_tree(lli n){
     return tree;
 }
 
+lli Nodes::vector_to_integer(std::vector<int> state_vector){
+    lli power = 1, num = 0, n = state_vector.size();
+
+    for (lli i = n_genes-1; i >= 0; i--)
+    {
+        if (state_vector[i])
+            num += power;
+        power *= 2;
+    }
+    
+    return num;
+}
+
+std::vector<int> Nodes::integer_to_vector(lli num){
+    std::vector<int> state_vector(n_genes);
+    lli power = node_vector.size()/2;
+    for (lli i = 0; i < n_genes; i++){
+
+        if(num/power >= 1){
+
+            state_vector[i] = 1;
+            num -= power;
+        }
+        else{
+    
+            state_vector[i] = 0;
+        }
+
+        power /= 2;
+    }
+    
+    return state_vector;
+}
+
 /* Public functions */
 
 /* Creates a random tree with n vertices */
 Nodes::Nodes(lli n, lli seed){
+    this->n_genes = log2(n);
+
     node_vector.resize(n);
     srand(seed);
     std::vector<lli> tree = random_tree(n);
@@ -113,6 +149,8 @@ Nodes::Nodes(lli n, lli seed){
 
 /* Create a pre-defined graph */
 Nodes::Nodes(std::vector<lli>& out, std::vector<lli>& in, lli n){
+    this->n_genes = log2(n);
+
     std::vector<Node> novo(n);
     node_vector = novo;
     for (lli i = 0; i < n; i++){
@@ -199,18 +237,35 @@ void Nodes::calcula_fluxo(){
     }
 }
 
-// define as funções que podem ser usadas no python
-PYBIND11_MODULE(nodes, handle) {
-    py::class_<Nodes>(handle, "Nodes")
-        .def(py::init<lli, lli>())
-        .def(py::init<std::vector<lli>&, std::vector<lli>&, lli>())
-        .def("add_flow", &Nodes::add_flow)
-        .def("add_adj", &Nodes::add_adj)
-        .def("set_weight", &Nodes::set_weight)
-        .def("adj", &Nodes::adj)
-        .def("adj", &Nodes::adj)
-        .def("fathers", &Nodes::fathers)
-        .def("weight", &Nodes::weight)
-        .def("get_flow_amount", &Nodes::get_flow_amount)
-        .def("calcula_fluxo", &Nodes::calcula_fluxo);
+std::vector<std::vector<int>> Nodes::infer_regulation_matrix(){
+    std::vector<std::vector<int>> actual_states, next_states;
+    lli actual, next, n = node_vector.size();
+
+    for (lli i = 0; i < n; i++)
+    {
+        actual = i;
+        next = this->adj(i)[0].second;
+        actual_states.push_back(integer_to_vector(actual));
+        next_states.push_back(integer_to_vector(next));
+    }
+    
+
+    return this->M;
 }
+
+// define as funções que podem ser usadas no python
+// PYBIND11_MODULE(nodes, handle) {
+//     py::class_<Nodes>(handle, "Nodes")
+//         .def(py::init<lli, lli>())
+//         .def(py::init<std::vector<lli>&, std::vector<lli>&, lli>())
+//         .def("add_flow", &Nodes::add_flow)
+//         .def("add_adj", &Nodes::add_adj)
+//         .def("set_weight", &Nodes::set_weight)
+//         .def("adj", &Nodes::adj)
+//         .def("adj", &Nodes::adj)
+//         .def("fathers", &Nodes::fathers)
+//         .def("weight", &Nodes::weight)
+//         .def("get_flow_amount", &Nodes::get_flow_amount)
+//         .def("calcula_fluxo", &Nodes::calcula_fluxo);
+//         .def("infer_regulation_matrix", &Nodes::infer_regulation_matrix);
+// }

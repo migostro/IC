@@ -3,9 +3,10 @@
 
 //#include <vector>
 #include <bits/stdc++.h>
-#include <pybind11/pybind11.h>
-#include <pybind11/stl.h>
+// #include <pybind11/pybind11.h>
+// #include <pybind11/stl.h>
 #include <cstdlib>
+#include <math.h>
 
 
 #define lli long long int
@@ -37,8 +38,16 @@ class Node{
 class Nodes{
     private:
         std::vector<Node> node_vector;
+        // Regulation Matrix
+        std::vector<std::vector<int>> M;
+        lli n_genes;
+
         std::vector<lli> random_tree(lli n);
+
     public:
+        lli vector_to_integer(std::vector<int> state_vector);
+        std::vector<int> integer_to_vector(lli num);
+
         Nodes(lli n, lli seed);
         Nodes(std::vector<lli>& out, std::vector<lli>& in, lli n);
         void add_flow(lli v, lli amount);
@@ -50,6 +59,7 @@ class Nodes{
         lli weight(lli i, lli j);
         lli get_flow_amount(lli i);
         void calcula_fluxo();
+        std::vector<std::vector<int>> infer_regulation_matrix();
 
 };
 
