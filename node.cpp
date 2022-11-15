@@ -85,8 +85,9 @@ std::vector<lli> Nodes::random_tree(lli n){
 
     // defines de atractor
     tree[0] = 0;
+    tree[1] = 1;
 
-    for (lli i = 1; i < n; i++)
+    for (lli i = 2; i < n; i++)
     {
         // random number in [0,i[
         lli random_num = rand()%i;
