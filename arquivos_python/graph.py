@@ -86,6 +86,9 @@ class Graph:
         if(self.visited[next_state] == 0):
             self._init_vector_visited_aux(next_state)
 
+    def next_state(self, state):
+        return self.in_v[state]
+
     def get_states_per_basin(self):
         return self.states_per_basin
         
@@ -338,3 +341,10 @@ class Graph:
             g.edge(out_state, in_state)
         
         return g
+    
+    def dist_to_attractor(self, state):
+        dist = 0
+        while (not state in self.attractors_of(state)):
+            dist += 1
+            state = self.next_state(state)
+        return dist
