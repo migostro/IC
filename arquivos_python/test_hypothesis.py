@@ -55,7 +55,7 @@ def histograms(graphs, states, attractors):
                 num_same_basin += 1
 
                 dist = graph.dist_to_attractor(states[i][j])
-                add_in_vector(matrix_of_dists, dist, len(states[i]))
+                add_in_matrix(matrix_of_dists, dist, len(states[i]))
             add_in_matrix(matrix_same_basin, num_same_basin, len(states[i]))
 
     return matrix_of_dists, matrix_same_basin
