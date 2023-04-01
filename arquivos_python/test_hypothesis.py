@@ -11,7 +11,6 @@ def grow_vector_size(vector, n):
         m = vector.shape[0]
         new_vector[0:m] = vector
         return new_vector
-        # return np.resize(frequencie_of_positive_hipotesis, [n, n])
     return vector
 
 def add_in_vector(vector, val):
@@ -23,7 +22,7 @@ def matrix():
     return np.zeros([5, 5])
 
 def grow_matrix_size(matrix, n):
-    if(matrix.shape[0] < n):
+    if(matrix.shape[0] <= n):
         new_matrix = np.zeros([n+1, n+1])
         m = matrix.shape[0]
         new_matrix[0:m, 0:m] = matrix
@@ -33,6 +32,8 @@ def grow_matrix_size(matrix, n):
 def add_in_matrix(matrix, val_row, val_col):
     if(matrix.shape[0] <= val_col):
         matrix = grow_matrix_size(matrix, val_col)
+    if (matrix.shape[1] <= val_row):
+        matrix = grow_matrix_size(matrix, val_row)
     matrix[val_row, val_col] += 1
 
 def histograms(graphs, states, attractors):
@@ -50,7 +51,9 @@ def histograms(graphs, states, attractors):
     for i, graph in enumerate(graphs):
         num_same_basin = 0
         # num_not_in_same_basin = 0
-        for j in range(len(states)):
+        for j in range(len(states[i])):
+            print(j)
+            print(len(states[i]), len(attractors[i]))
             if (graph.is_states_in_same_basin(states[i][j], attractors[i][j])):
                 num_same_basin += 1
 
@@ -80,5 +83,3 @@ def histogram_test1():
     graphs = [graph]
 
     print(histograms(graphs, [[1735]], [[564]]))
-
-histogram_test1()
