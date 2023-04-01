@@ -103,6 +103,16 @@ class Graph:
         """
         
         return self.visited[v]-1
+    
+    def is_states_in_same_basin(self, state1, state2):
+        """
+            Verifica se os estados pertencem a mesma bacia de atração
+            :param estado1, do diagrama de estados
+            :param estado2, do diagrama de estados
+
+            :return True se pertencem e False caso contrario
+        """
+        return self.vertice_id(state1) == self.vertice_id(state2)
 
     def attractors_of(self, v):
         """

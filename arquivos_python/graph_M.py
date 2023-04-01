@@ -1,8 +1,6 @@
 import numpy as np
 import nodes as no
 from tbn import tbn
-import random
-from graphviz import Digraph
 from graph import Graph
 
 

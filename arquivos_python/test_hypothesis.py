@@ -1,4 +1,5 @@
-from graph import Graph
+# from graph import Graph
+from graph_M import Graph_M
 import numpy as np
 
 def vector():
@@ -13,25 +14,71 @@ def grow_vector_size(vector, n):
         # return np.resize(frequencie_of_positive_hipotesis, [n, n])
     return vector
 
+def add_in_vector(vector, val):
+    if (val >= vector.size()):
+        grow_vector_size(vector, val)
+    vector[val] += 1
+
+def matrix():
+    return np.zeros([5, 5])
+
 def grow_matrix_size(matrix, n):
     if(matrix.shape[0] < n):
-        new_matrix = np.zeros([n, n])
+        new_matrix = np.zeros([n+1, n+1])
         m = matrix.shape[0]
         new_matrix[0:m, 0:m] = matrix
         return new_matrix
-        # return np.resize(frequencie_of_positive_hipotesis, [n, n])
     return matrix
 
-def histogram_dist_to_attractor(graphs, states):
-    """
-        recebe uma lista de estados e joga no histograma a distancia de cada estado ao seu atrator
-        :param states, estados que devem ser testados
-    """
-    vec = vector()
-    for i in range(graphs):
-        dist = graphs[i].dist_to_attractor(states[i])
-        if (dist >= vec.size()):
-            grow_vector_size(vec, dist)
-            vec[dist] += 1
+def add_in_matrix(matrix, val_row, val_col):
+    if(matrix.shape[0] <= val_col):
+        matrix = grow_matrix_size(matrix, val_col)
+    matrix[val_row, val_col] += 1
 
-    return vec
+def histograms(graphs, states, attractors):
+    """
+        Calcula a frequencia de algumas propriedades do diagrama de estados
+        :param graphs, lista de grafos (pode ser do tipo Graph e derivados)
+        :param states, lista de listas de estados que supostamente são o inicio do caminho central
+        :param attractors, lista de listas de atratores das maiores bacias de atração de cada graph
+
+        :return frequencia de ocorrencias das distancias até o atrator; das ocorrencias das quantidades de atratores que possuem seus states na mesma bacia de atração
+    """
+    matrix_of_dists = matrix()
+    matrix_same_basin = matrix()
+
+    for i, graph in enumerate(graphs):
+        num_same_basin = 0
+        # num_not_in_same_basin = 0
+        for j in range(len(states)):
+            if (graph.is_states_in_same_basin(states[i][j], attractors[i][j])):
+                num_same_basin += 1
+
+                dist = graph.dist_to_attractor(states[i][j])
+                add_in_vector(matrix_of_dists, dist, len(states[i]))
+            add_in_matrix(matrix_same_basin, num_same_basin, len(states[i]))
+
+    return matrix_of_dists, matrix_same_basin
+
+
+############################################### TESTES ################################################
+
+def histogram_test1():
+    matriz_yeast = np.array([
+    [-1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0 ],
+    [ 1,  0,  0,  0,  0,  0,  0,  0,  0, -1,  0 ],
+    [ 1,  0,  0,  0,  0,  0,  0,  0,  0, -1,  0 ],
+    [ 0,  0,  1, -1,  0,  0,  0,  0,  0,  0,  0 ],
+    [ 0,  0,  0, -1,  0,  0,  1, -1,  0, -1,  0 ],
+    [ 0,  0,  0,  0,  0, -1,  1,  0,  0, -1,  1 ],
+    [ 0,  0,  0,  0,  0,  0, -1,  0,  0,  1,  1 ],
+    [ 0,  1,  0,  0,  0,  0, -1,  0, -1,  0,  0 ],
+    [ 0,  0,  0, -1,  0,  1,  1, -1,  0, -1,  0 ],
+    [ 0,  0,  0,  0, -1,  0, -1,  1, -1,  0,  1 ],
+    [ 0,  0,  0,  0,  0,  0,  0,  1,  0,  1, -1 ]], dtype=int)
+    graph = Graph_M(matriz_yeast)
+    graphs = [graph]
+
+    print(histograms(graphs, [[1735]], [[564]]))
+
+histogram_test1()
