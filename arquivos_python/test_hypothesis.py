@@ -1,6 +1,8 @@
 # from graph import Graph
 from graph_M import Graph_M
 import numpy as np
+import pandas as pd
+import matplotlib as mpl
 
 def vector():
     return np.zeros([5])
@@ -13,7 +15,7 @@ def grow_vector_size(vector, n):
         :return vector(n+1) 
     """
     if (vector.shape[0] < n):
-        new_vector = np.zeros([n+1])
+        new_vector = np.zeros([n+1], dtype=np.uint64)
         m = vector.shape[0]
         new_vector[0:m] = vector
         return new_vector
@@ -30,7 +32,7 @@ def add_in_vector(vector, val):
     vector[val] += 1
 
 def matrix():
-    return np.zeros([5, 5])
+    return np.zeros([5, 5], dtype=np.uint64)
 
 def grow_matrix_size(matrix, n):
     """
@@ -40,7 +42,8 @@ def grow_matrix_size(matrix, n):
         :return matriz(n+1, n+1) 
     """
     if(matrix.shape[0] <= n):
-        new_matrix = np.zeros([n+1, n+1])
+        new_matrix = np.zeros([n+1, n+1], dtype=np.uint64)
+        
         m = matrix.shape[0]
         new_matrix[0:m, 0:m] = matrix
         return new_matrix
@@ -59,6 +62,8 @@ def add_in_matrix(matrix, val_row, val_col):
         matrix = grow_matrix_size(matrix, val_row)
     matrix[val_row, val_col] += 1
 
+    return matrix
+
 def histograms(graphs, states, attractors):
     """
         Calcula a frequencia de algumas propriedades do diagrama de estados
@@ -76,15 +81,16 @@ def histograms(graphs, states, attractors):
         attractors_size = len(states[i])
         # num_not_in_same_basin = 0
         for j in range(len(states[i])):
-            print(j)
-            print(len(states[i]), len(attractors[i]))
+            # print(j)
+            # print(len(states[i]), len(attractors[i]))
             if (graph.is_states_in_same_basin(states[i][j], attractors[i][j])):
                 num_same_basin += 1
                 
                 dist = graph.dist_to_attractor(states[i][j])
-                add_in_matrix(matrix_of_dists, dist, attractors_size)
+                matrix_of_dists = add_in_matrix(matrix_of_dists, dist, attractors_size)
+                # print(matrix_of_dists)
 
-        add_in_matrix(matrix_same_basin, num_same_basin, attractors_size)
+        matrix_same_basin = add_in_matrix(matrix_same_basin, num_same_basin, attractors_size)
             
 
     return matrix_of_dists, matrix_same_basin
@@ -109,3 +115,17 @@ def histogram_test1():
     graphs = [graph]
 
     print(histograms(graphs, [[1735]], [[564]]))
+
+def print_data(data, row_label, col_label):
+    index = [str(i) for i in range(data.shape[0])]
+    
+    # defining column headers for the 
+    # Pandas dataframe
+    columns = [str(i) for i in range(data.shape[1])]
+    
+    # removes linebreaks
+    pd.set_option('display.expand_frame_repr', False)
+    df = pd.DataFrame(data,
+                    index=pd.Index(index, name=row_label),
+                    columns=pd.MultiIndex.from_product([[col_label],columns]))
+    return df.style
