@@ -50,7 +50,7 @@ def sort_matrix(states_sequence):
 
         heapq.heappush(min_heap, (start_line, finish_line, j))
 
-    new_states_sequence = np.zeros(states_sequence.shape)
+    new_states_sequence = np.zeros(states_sequence.shape, dtype=np.uint8)
 
     for i in range(states_sequence.shape[1]):
         tuple = heapq.heappop(min_heap)
