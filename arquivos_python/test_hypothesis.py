@@ -117,6 +117,12 @@ def histogram_test1():
     print(histograms(graphs, [[1735]], [[564]]))
 
 def print_data(data, row_label, col_label):
+    """
+        Mostra os dados de uma matriz utilizando a biblioteca pandas
+        :param data, matriz com os dados
+        :param row_label, label do significado das linhas
+        :param col_label, label do significado das colunas
+    """
     index = [str(i) for i in range(data.shape[0])]
     
     # defining column headers for the 
