@@ -13,7 +13,7 @@ class Graph_M(Graph):
         # super().__init__(out_v, in_v, n, seed)
         self.M = M
         self.num_genes = M.shape[0]
-        out_v, in_v = self.M_to_transitions_states(M)
+        out_v, in_v = self.M_to_transitions_states(M, teta)
         self.n = 2**(self.num_genes)
 
         self.in_v = in_v
