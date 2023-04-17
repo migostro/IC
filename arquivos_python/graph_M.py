@@ -11,8 +11,10 @@ class Graph_M(Graph):
 
     def __init__(self, M):
         # super().__init__(out_v, in_v, n, seed)
+        self.M = M
+        self.num_genes = M.shape[0]
         out_v, in_v = self.M_to_transitions_states(M)
-        self.n = 2**(M.shape[0])
+        self.n = 2**(self.num_genes)
 
         self.in_v = in_v
         self.nos = no.Nodes(out_v, in_v, self.n)
@@ -41,16 +43,16 @@ class Graph_M(Graph):
 
 
     def M_to_transitions_states(self, M):
-        names = np.array([str(i) for i in range(M.shape[0])])
+        # names = np.array([str(i) for i in range(M.shape[0])])
         n = 2**M.shape[0]
         out_v = np.zeros(n, dtype=np.uint32)
         in_v = np.zeros(n, dtype=np.uint32)
-        R = tbn(M,names)
+        # R = tbn(M,names)
         
-        D = R.state_transition_list()
+        D = self.state_transition_list()
         
         for i in range(len(D)):
-            out_v[i] = R._list_num(D[i][0])
-            in_v[i] = R._list_num(D[i][1])
+            out_v[i] = D[i][0]
+            in_v[i] = D[i][1]
             
         return out_v, in_v

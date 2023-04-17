@@ -4,6 +4,7 @@ from tbn import tbn
 import random
 from graphviz import Digraph
 from graph import Graph
+import math
 
 class Graph_S(Graph):
     """
@@ -13,6 +14,7 @@ class Graph_S(Graph):
     def __init__(self, out_v, in_v):
         # super().__init__()
         self.n = len(out_v)
+        self.num_genes = math.log2(self.n)
         self.in_v = np.zeros(self.n, dtype=np.uint32)
         # self.nos = no.Nodes(self.n, seed)
         self.nos.calcula_fluxo()

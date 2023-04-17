@@ -54,6 +54,64 @@ class Graph:
         
         # self._init_vector_visited()
         # self.construct_attractors()
+    def _list_num (self, list_s):
+        """
+        Converts a binary list of a number into the corresponding decimal number.
+        Example: [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0] --> 4
+        :param list_s: Binary number in a list format.
+        :return: Decimal number, type int.
+        """
+        str_s = "".join(map(str, list_s))
+        int_s = int(str_s, 2)
+        return int_s
+
+    def _num_list (self, int_s):
+        """
+        Converts a decimal number to binary type number, then separates all the digits and puts them in a list.
+        (int type values).
+        :param int_s: Any integer number from 0 to 2047;
+        :return: A binary list corresponding to that number expressed in 11 digits.
+        Example: Converts 2 into [0, 0, 0, 0, 0, 1, 0].
+        """
+        n = self.ngenes
+        list_s = [0 for i in range(n)]
+        str_s = f'{int_s:b}'
+        i = -1
+        for s in str_s[::-1]:
+            list_s[i] = int (s)
+        i -= 1
+        return np.array(list_s)
+    
+    def _next_state(self, actual_state, teta = []):
+        if teta == []:
+            teta = np.zeros([self.num_genes])
+        
+        actual_state_list = self._num_list(actual_state)
+        next_state_list = np.zeros([len(actual_state_list)])
+
+        for i in range(self.num_genes):
+            sum = np.inner(actual_state_list, self.M[i,:])
+
+            if (sum-teta[i] > 0):
+                next_state_list[i] = 1
+            elif (sum-teta < 0):
+                next_state_list[i] = 0
+            else:
+                next_state_list[i] = actual_state_list[i]
+        
+        return self._list_num(next_state_list)
+    
+    def state_transition_list(self, M, teta):
+        D = []
+
+        num_states = 2**M.shape[0]
+
+        for actual_state in range(num_states):
+            next_state = self._next_state(actual_state, teta)
+
+            D.append([actual_state, next_state])
+
+        return D
 
     def _init_vector_visited(self):
         """
@@ -289,6 +347,8 @@ class Graph:
     #             elif choice >= 1 - negative_chance:
     #                 M[i,j] = -1
     #     return connected_M(M)
+
+    # def state_transition_list():
 
     def M_to_W(self, M):
         """
