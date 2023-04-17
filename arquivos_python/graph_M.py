@@ -9,7 +9,7 @@ class Graph_M(Graph):
         Utiliza uma matriz n x n para gerar o grafo e a transição de estados
     """
 
-    def __init__(self, M):
+    def __init__(self, M, teta=[]):
         # super().__init__(out_v, in_v, n, seed)
         self.M = M
         self.num_genes = M.shape[0]
@@ -42,14 +42,14 @@ class Graph_M(Graph):
         self.construct_attractors()
 
 
-    def M_to_transitions_states(self, M):
+    def M_to_transitions_states(self, M, teta=[]):
         # names = np.array([str(i) for i in range(M.shape[0])])
         n = 2**M.shape[0]
         out_v = np.zeros(n, dtype=np.uint32)
         in_v = np.zeros(n, dtype=np.uint32)
         # R = tbn(M,names)
         
-        D = self.state_transition_list()
+        D = self.state_transition_list(teta)
         
         for i in range(len(D)):
             out_v[i] = D[i][0]

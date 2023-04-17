@@ -101,10 +101,10 @@ class Graph:
         
         return self._list_num(next_state_list)
     
-    def state_transition_list(self, M, teta):
+    def state_transition_list(self, teta=[]):
         D = []
 
-        num_states = 2**M.shape[0]
+        num_states = 2**self.M.shape[0]
 
         for actual_state in range(num_states):
             next_state = self._next_state(actual_state, teta)
