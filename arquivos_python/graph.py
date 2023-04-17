@@ -79,7 +79,7 @@ class Graph:
         i = -1
         for s in str_s[::-1]:
             list_s[i] = int (s)
-        i -= 1
+            i -= 1
         return np.array(list_s)
     
     def _next_state(self, actual_state, teta = []):
