@@ -87,7 +87,7 @@ class Graph:
             teta = np.zeros([self.num_genes])
         
         actual_state_list = self._num_list(actual_state)
-        next_state_list = np.zeros([len(actual_state_list)])
+        next_state_list = np.zeros([len(actual_state_list)], dtype=np.int16)
 
         for i in range(self.num_genes):
             sum = np.inner(actual_state_list, self.M[i,:])
