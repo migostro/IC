@@ -94,7 +94,7 @@ class Graph:
 
             if (sum-teta[i] > 0):
                 next_state_list[i] = 1
-            elif (sum-teta < 0):
+            elif (sum-teta[i] < 0):
                 next_state_list[i] = 0
             else:
                 next_state_list[i] = actual_state_list[i]
