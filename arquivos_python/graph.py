@@ -73,7 +73,7 @@ class Graph:
         :return: A binary list corresponding to that number expressed in 11 digits.
         Example: Converts 2 into [0, 0, 0, 0, 0, 1, 0].
         """
-        n = self.ngenes
+        n = self.num_genes
         list_s = [0 for i in range(n)]
         str_s = f'{int_s:b}'
         i = -1
