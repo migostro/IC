@@ -360,17 +360,17 @@ class Graph:
 
         names = [str(i) for i in range(M.shape[0])]
         
-        R = tbn(M, names)
+        # R = tbn(M, names)
 
-        D_transitions = R.state_transition_list()
+        D_transitions = self.state_transition_list()
 
         out_v = []
         in_v = []
 
         # converte a lista binária de transições de estados de lista para uma lista de inteiro
         for i in range(len(D_transitions)):
-            out_num = R._list_num(D_transitions[i][0])
-            in_num  = R._list_num(D_transitions[i][1])
+            out_num = D_transitions[i][0]
+            in_num  = D_transitions[i][1]
             out_v.append(out_num)
             in_v.append(in_num)
         n = len(out_v)
