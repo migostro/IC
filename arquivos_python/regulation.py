@@ -29,3 +29,13 @@ class Regulation:
 
     def get_negative_adj(self, gene):
         return self.negative_adj(gene)
+    
+    def leaves_positive(self):
+        """
+            Retorna os genes que são folhas olhando apenas os arcos positivos
+        """
+        leaves = []
+        for gene in range(self.M.shape[0]):
+            if self.positive_adj[gene] == []:
+                leaves.append(gene)
+        return leaves
