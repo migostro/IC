@@ -2,6 +2,7 @@ import numpy as np
 import nodes as no
 from tbn import tbn
 from graph import Graph
+from regulation import Regulation
 
 
 class Graph_M(Graph):
@@ -12,6 +13,7 @@ class Graph_M(Graph):
     def __init__(self, M, teta=[]):
         # super().__init__(out_v, in_v, n, seed)
         self.M = M
+        self.regulation = Regulation(M)
         self.num_genes = M.shape[0]
         out_v, in_v = self.M_to_transitions_states(M, teta)
         self.n = 2**(self.num_genes)
