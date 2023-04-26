@@ -381,19 +381,19 @@ class Graph:
 
         return W
         
-    def draw(self, M):
+    def draw(self):
         
         g = Digraph('G')
         # g.attr(size='120')
-        n = M.shape[0]
+        n = self.M.shape[0]
     
         names = [str(i) for i in range(n)]
         
         for i in range(n):
            for j in range(n):
-             if M[i][j] < 0:
+             if self.M[i][j] < 0:
                g.edge (str(names[j]),str(names[i]), arrowhead = "tee", color="red")
-             if M[i][j] > 0:
+             if self.M[i][j] > 0:
                g.edge (str(names[j]),str(names[i]))
         return g
         
