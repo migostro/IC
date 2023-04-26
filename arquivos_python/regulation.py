@@ -1,8 +1,8 @@
 class Regulation:
     def __init__(self, M):
         self.M = M
-        self.positive_adj = self._positive_adj()
-        self.negative_adj = self._negative_adj()
+        self._positive_adj()
+        self._negative_adj()
 
     def _positive_adj(self):
         self.positive_adj = []
@@ -34,7 +34,6 @@ class Regulation:
         """
             Retorna os genes que são folhas olhando apenas os arcos positivos
         """
-        self.positive_adj = []
         leaves = []
         for gene in range(self.M.shape[0]):
             if self.positive_adj[gene] == []:
