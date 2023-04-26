@@ -1,6 +1,5 @@
 import numpy as np
 import nodes as no
-from tbn import tbn
 from graph import Graph
 from regulation import Regulation
 
@@ -49,7 +48,6 @@ class Graph_M(Graph):
         n = 2**M.shape[0]
         out_v = np.zeros(n, dtype=np.uint32)
         in_v = np.zeros(n, dtype=np.uint32)
-        # R = tbn(M,names)
         
         D = self.state_transition_list(teta)
         

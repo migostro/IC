@@ -1,59 +1,9 @@
 import numpy as np
 import nodes as no
-from tbn import tbn
 import random
 from graphviz import Digraph
 
 class Graph:
-    """
-        Inicializa as variáveis de acordo o tipo de digrafo
-
-        tipo 1 (pré-definido)
-        :param out_v, vertices que estão saindo as arestas
-        :param in_v, vertices que as arestas estão entrando
-        :param n, numero de vertices do digrafo
-
-        tipo 2 (arvore aleatoria)
-        :param n, numero de vertices do digrafo
-        :param seed, seed utilizada para a aleatorização
-    """
-    # def init(self):
-        # digrafo pré definido
-        # if(seed == -1):
-        #     self.n = n
-        #     self.in_v = in_v
-        #     self.nos = no.Nodes(out_v, in_v, n)
-        #     self.nos.calcula_fluxo()
-        #     self.vetor_pesos = np.zeros(n, dtype=np.uint32)
-        #     for i in range(n):
-        #         self.vetor_pesos[i] = self.nos.get_flow_amount(i)
-        # # digrafo aleatório
-        # else:
-        #     self.n = n
-        #     self.in_v = np.zeros(n, dtype=np.uint32)
-        #     self.nos = no.Nodes(n, seed)
-        #     self.nos.calcula_fluxo()
-        #     self.vetor_pesos = np.zeros(n, dtype=np.uint32)
-        #     for i in range(n):
-        #         self.in_v[i] = self.nos.adj(i)[0][1]
-        #         self.vetor_pesos[i] = self.nos.get_flow_amount(i)  
-
-        # self.num_basins_atraction = 0
-        # # visited[i] guarda a qual bacia de atração o vertice i pertence. 1 <= visited[i] <= num_basins_atraction
-        # self.visited = np.zeros(self.n, dtype=np.uint32)
-        # self.states_per_basin = []
-        # self.attractors = []
-        # # sum[i] é a menor soma dos pesos das arestas do vertice i até um de seus atratores
-        # self.sum = np.zeros(self.n, dtype=np.uint32)
-        # # dist[i] é a menor quantidade de arestas do vertice i até um de seus atratores
-        # self.dist = np.zeros(self.n, dtype=np.uint32)
-        
-        # # estados iniciais de cada bacia de atração
-        # self.inicial_state = []
-        # self.vector_w = np.zeros(self.n, dtype=np.float64)
-        
-        # self._init_vector_visited()
-        # self.construct_attractors()
     def _list_num (self, list_s):
         """
         Converts a binary list of a number into the corresponding decimal number.
@@ -311,13 +261,13 @@ class Graph:
             self.w()
 
         return np.sum(self.vector_w)/len(self.vector_w)
-    """
-        :param stado de que começa o caminho
-        :return o caminho do estado até seu atrator
-    """
+
     def take_path_to_atraction(self, state):
-        #if(self.visited[0] == 0):
-        #    self._init_vector_visited()
+        """
+            :param stado de que começa o caminho
+            :return o caminho do estado até seu atrator
+        """
+
         path = []
         current = state
         basin_of_att = self.attractors_of(state)
@@ -328,28 +278,6 @@ class Graph:
         path.append(current)
         return path
 
-    # def random_M(n, positive_chance, negative_chance):
-    #     """
-    #         Cria uma matriz de regulação
-    #         :param n, numero de colunas/linhas da matriz
-    #         :param positive_chance, a chance de uma ocorrência de um 1
-    #         :param negative_chance, a chance de uma ocorrência de um -1
-    #         :return uma matriz de regulação
-    #     """
-    #     M = np.zeros([n,n])
-
-    #     for i in range(n):
-    #         for j in range(n):
-    #             choice = random.random()
-
-    #             if choice <= positive_chance:
-    #                 M[i,j] = 1
-    #             elif choice >= 1 - negative_chance:
-    #                 M[i,j] = -1
-    #     return connected_M(M)
-
-    # def state_transition_list():
-
     def M_to_W(self, M):
         """
             Calcula o valor W a partir da matriz de regulação M
@@ -357,10 +285,6 @@ class Graph:
             :param names, nome de cada gene
             :return W
         """
-
-        names = [str(i) for i in range(M.shape[0])]
-        
-        # R = tbn(M, names)
 
         D_transitions = self.state_transition_list()
 
@@ -418,3 +342,16 @@ class Graph:
             dist += 1
             state = self.next_state(state)
         return dist
+    
+    def attractors_of_biggest_basin(self):
+        """
+            :param graph, do tipo Graph ou similares
+            :return os atratores da maior bacia de atração
+        """
+
+        bigger_basin = max(self.states_per_basin)
+
+        index = self.states_per_basin.index(bigger_basin)
+        attractors_of_bigger_basin = self.attractors[index]
+
+        return attractors_of_bigger_basin, bigger_basin

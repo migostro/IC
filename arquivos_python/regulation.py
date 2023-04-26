@@ -34,6 +34,7 @@ class Regulation:
         """
             Retorna os genes que são folhas olhando apenas os arcos positivos
         """
+        self.positive_adj = []
         leaves = []
         for gene in range(self.M.shape[0]):
             if self.positive_adj[gene] == []:
