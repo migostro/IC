@@ -41,6 +41,7 @@ class Graph_M(Graph):
         
         self._init_vector_visited()
         self.construct_attractors()
+        self.w()
 
 
     def M_to_transitions_states(self, M, teta=[]):

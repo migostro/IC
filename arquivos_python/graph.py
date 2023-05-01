@@ -221,7 +221,6 @@ class Graph:
     def w(self):
         """
             Constroi o vetore w a partir de sum e dist
-            :param um inteiro v que representa um vertice
         """
 
         if len(self.attractors) == 0:
@@ -252,15 +251,15 @@ class Graph:
 
         for i in range(self.n):
             if(self.dist[i] != 0):
-                self.vector_w[i] = self.sum[i]/self.dist[i]
+                self.w[i] = self.sum[i]/self.dist[i]
             else:
-                self.vector_w[i] = 0
+                self.w[i] = 0
 
     def W(self):
-        if(self.vector_w[0] == 0):
+        if(self.w[0] == 0):
             self.w()
 
-        return np.sum(self.vector_w)/len(self.vector_w)
+        return np.sum(self.w)/len(self.w)
 
     def take_path_to_atraction(self, state):
         """

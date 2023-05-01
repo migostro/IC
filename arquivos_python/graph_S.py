@@ -39,3 +39,4 @@ class Graph_S(Graph):
         
         self._init_vector_visited()
         self.construct_attractors()
+        self.w()
