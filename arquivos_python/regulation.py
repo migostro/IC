@@ -7,21 +7,21 @@ class Regulation:
     def _positive_adj(self):
         self.positive_adj = []
 
-        for i in range(self.M.shape[0]):
+        for j in range(self.M.shape[1]):
             adjs = []
-            for j in range(self.M.shape[1]):
+            for i in range(self.M.shape[0]):
                 if (self.M[i, j] == 1):
-                    adjs.append(j)
+                    adjs.append(i)
             self.positive_adj.append(adjs)
 
     def _negative_adj(self):
         self.negative_adj = []
 
-        for i in range(self.M.shape[0]):
+        for j in range(self.M.shape[1]):
             adjs = []
-            for j in range(self.M.shape[1]):
+            for i in range(self.M.shape[0]):
                 if (self.M[i, j] == -1):
-                    adjs.append(j)
+                    adjs.append(i)
             self.negative_adj.append(adjs)
 
     def get_positive_adj(self, gene):
