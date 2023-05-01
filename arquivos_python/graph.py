@@ -218,7 +218,7 @@ class Graph:
 
             self.calculate_w_for_s(u)
 
-    def w(self):
+    def calculate_w(self):
         """
             Constroi o vetore w a partir de sum e dist
         """
@@ -255,9 +255,9 @@ class Graph:
             else:
                 self.w[i] = 0
 
-    def W(self):
+    def calculate_W(self):
         if(self.w[0] == 0):
-            self.w()
+            self.calculate_w()
 
         return np.sum(self.w)/len(self.w)
 
@@ -299,7 +299,7 @@ class Graph:
         n = len(out_v)
         graph = Graph(out_v, in_v, n)
 
-        graph.w()
+        graph.calculate_w()
         W = graph.W()
 
         return W

@@ -1,7 +1,4 @@
 import numpy as np
-import nodes as no
-import random
-from graphviz import Digraph
 from graph import Graph
 import math
 
