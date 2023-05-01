@@ -37,7 +37,7 @@ class Graph_M(Graph):
         
         # estados iniciais de cada bacia de atração
         self.inicial_state = []
-        self.vector_w = np.zeros(self.n, dtype=np.float64)
+        self.w = np.zeros(self.n, dtype=np.float64)
         
         self._init_vector_visited()
         self.construct_attractors()
