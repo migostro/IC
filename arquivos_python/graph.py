@@ -359,4 +359,4 @@ class Graph:
         """
             :return fathers dos estados
         """
-        return this.nos.fathers
+        return this.nos.fathers()
