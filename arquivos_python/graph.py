@@ -354,3 +354,9 @@ class Graph:
         attractors_of_bigger_basin = self.attractors[index]
 
         return attractors_of_bigger_basin, bigger_basin
+    
+    def fathers(this):
+        """
+            :return fathers dos estados
+        """
+        return this.nos.fathers
