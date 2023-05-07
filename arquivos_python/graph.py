@@ -357,6 +357,6 @@ class Graph:
     
     def fathers(this, i):
         """
-            :return o father do estado
+            :return os fathers do estado
         """
         return this.nos.fathers(i)
